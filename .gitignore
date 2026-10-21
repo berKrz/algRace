@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Local Postgres cluster
+.pg-data/
+.pg-socket/
+
+# Env
+.env
+
+# Direnv
+.direnv/
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
