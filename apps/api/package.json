@@ -1,0 +1,40 @@
+{
+	"name": "@algrace/api",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "bun --watch src/main.ts",
+		"start": "bun src/main.ts",
+		"test": "bun test",
+		"test:unit": "bun test test/**/*.unit.spec.ts",
+		"test:integration": "bun test test/**/*.integration.spec.ts",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate"
+	},
+	"dependencies": {
+		"@aws-sdk/client-sns": "^3.1156.0",
+		"@aws-sdk/client-sqs": "^3.1156.0",
+		"@nestjs/common": "^11.0.0",
+		"@nestjs/core": "^11.0.0",
+		"@nestjs/platform-express": "^11.0.0",
+		"class-transformer": "latest",
+		"class-validator": "latest",
+		"drizzle-orm": "^0.45.4",
+		"nestjs-pino": "latest",
+		"pg": "^8.23.1",
+		"pg-listen": "^1.7.0",
+		"pino": "latest",
+		"pino-http": "latest",
+		"reflect-metadata": "^0.2.2",
+		"rxjs": "^7.8.1"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/express": "^5.0.6",
+		"@types/pg": "^8.23.1",
+		"drizzle-kit": "latest",
+		"pino-pretty": "latest",
+		"prettier": "^3.9.10",
+		"typescript": "^5.6.0"
+	}
+}

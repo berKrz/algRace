@@ -7,11 +7,20 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
     # Build the same devShell for every system flake-utils knows about
     # (x86_64-linux, aarch64-linux, x86_64-darwin, aarch64-darwin).
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in {
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             # Runtime
@@ -19,13 +28,13 @@
             postgresql_17
 
             # LSPs
-            typescript-language-server
-            nixd
+            vtsls
+            nil
 
             # Formatters
-            biome
             alejandra
           ];
         };
-      });
+      }
+    );
 }
