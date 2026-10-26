@@ -14,12 +14,13 @@ import {
 
 import { EnvSchema } from '@/config/env.schema';
 import { TOPICS, QUEUES, QUEUE_SUBSCRIPTIONS } from './topics';
-
-export const TOPIC_ARNS = Symbol('TOPIC_ARNS');
-export const QUEUE_URLS = Symbol('QUEUE_URLS');
-
-export type TopicArnMap = Map<string, string>;
-export type QueueUrlMap = Map<string, string>;
+import { SnsPublisher } from './sns.publisher';
+import {
+	TOPIC_ARNS,
+	QUEUE_URLS,
+	type TopicArnMap,
+	type QueueUrlMap
+} from './messaging.tokens';
 
 @Global()
 @Module({
@@ -49,9 +50,10 @@ export type QueueUrlMap = Map<string, string>;
 		{
 			provide: QUEUE_URLS,
 			useValue: new Map<string, string>()
-		}
+		},
+		SnsPublisher
 	],
-	exports: [SNSClient, SQSClient, TOPIC_ARNS, QUEUE_URLS]
+	exports: [SNSClient, SQSClient, TOPIC_ARNS, QUEUE_URLS, SnsPublisher]
 })
 export class MessagingModule implements OnModuleInit {
 	private readonly logger = new Logger(MessagingModule.name);

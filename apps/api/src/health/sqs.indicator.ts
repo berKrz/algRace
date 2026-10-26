@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SQSClient, GetQueueAttributesCommand } from '@aws-sdk/client-sqs';
 
-import { QUEUE_URLS, type QueueUrlMap } from '@/messaging/messaging.module';
+import { QUEUE_URLS, type QueueUrlMap } from '@/messaging/messaging.tokens.ts';
 import { HealthIndicator, HealthIndicatorResult } from './health.types.ts';
 
 @Injectable()

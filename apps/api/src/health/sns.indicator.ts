@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SNSClient, GetTopicAttributesCommand } from '@aws-sdk/client-sns';
 
-import { TOPIC_ARNS, type TopicArnMap } from '@/messaging/messaging.module';
+import { TOPIC_ARNS, type TopicArnMap } from '@/messaging/messaging.tokens.ts';
 import { HealthIndicator, HealthIndicatorResult } from './health.types.ts';
 
 @Injectable()
