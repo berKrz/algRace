@@ -1,5 +1,4 @@
 import { Global, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
@@ -20,7 +19,6 @@ function validate(raw: Record<string, unknown>): EnvSchema {
 
 @Global()
 @Module({
-	imports: [ConfigModule.forRoot({ isGlobal: true, validate })],
 	providers: [
 		{
 			provide: EnvSchema,
