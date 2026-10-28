@@ -26,12 +26,14 @@
 		"pino": "latest",
 		"pino-http": "latest",
 		"reflect-metadata": "^0.2.2",
-		"rxjs": "^7.8.1"
+		"rxjs": "^7.8.1",
+		"seedrandom": "^3.0.5"
 	},
 	"devDependencies": {
 		"@types/bun": "latest",
 		"@types/express": "^5.0.6",
 		"@types/pg": "^8.23.1",
+		"@types/seedrandom": "^3.0.8",
 		"drizzle-kit": "latest",
 		"pino-pretty": "latest",
 		"prettier": "^3.9.10",

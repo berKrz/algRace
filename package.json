@@ -14,5 +14,14 @@
 		"db:migrate": "bun run --filter '@algrace/api' db:migrate",
 		"ministack:up": "bash scripts/ministack-up.sh",
 		"ministack:down": "bash scripts/ministack-down.sh"
+	},
+	"rules": {
+		"import/extensions": [
+			"error",
+			"always",
+			{
+				"ts": "always"
+			}
+		]
 	}
 }
