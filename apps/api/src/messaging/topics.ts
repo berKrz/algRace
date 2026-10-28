@@ -6,9 +6,9 @@ export const TOPICS = {
 export type TopicName = (typeof TOPICS)[keyof typeof TOPICS];
 
 export const QUEUES = {
-	GATEWAY_ALGORITHM_PROGRESS: 'gateway.algorithm-progress',
-	REFEREE_ALGORITHM_PROGRESS: 'referee.algorithm-progress',
-	SETTLER_ROUND_RESOLVED: 'settler.round-resolved'
+	GATEWAY_ALGORITHM_PROGRESS: 'gateway-algorithm-progress',
+	REFEREE_ALGORITHM_PROGRESS: 'referee-algorithm-progress',
+	SETTLER_ROUND_RESOLVED: 'settler-round-resolved'
 } as const;
 
 export type QueueName = (typeof QUEUES)[keyof typeof QUEUES];
