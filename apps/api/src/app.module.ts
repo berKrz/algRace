@@ -5,6 +5,7 @@ import { AppLoggerModule } from './common/logger/logger.module';
 import { DatabaseModule } from './database/database.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { HealthModule } from './health/health.module';
+import { SorterModule } from './sorter/sorter.module';
 
 @Module({
 	imports: [
@@ -12,7 +13,8 @@ import { HealthModule } from './health/health.module';
 		AppLoggerModule,
 		DatabaseModule,
 		MessagingModule,
-		HealthModule
+		HealthModule,
+		SorterModule
 	]
 })
 export class AppModule {}
