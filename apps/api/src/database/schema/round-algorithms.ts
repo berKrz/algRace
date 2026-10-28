@@ -1,10 +1,4 @@
-import {
-	interval,
-	pgTable,
-	primaryKey,
-	uuid,
-	varchar
-} from 'drizzle-orm/pg-core';
+import { interval, pgTable, primaryKey, uuid } from 'drizzle-orm/pg-core';
 
 import { algorithmEnum } from './enums';
 import { rounds } from './rounds';
@@ -16,8 +10,7 @@ export const roundAlgorithms = pgTable(
 			.notNull()
 			.references(() => rounds.id, { onDelete: 'cascade' }),
 		algorithm: algorithmEnum('algorithm').notNull(),
-		executionTime: interval('execution_time'),
-		processMarker: varchar('process_marker')
+		executionTime: interval('execution_time')
 	},
 	(table) => [primaryKey({ columns: [table.roundId, table.algorithm] })]
 );

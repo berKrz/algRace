@@ -1,0 +1,1 @@
+ALTER TABLE "round_algorithms" DROP COLUMN "process_marker";
