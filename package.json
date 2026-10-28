@@ -6,10 +6,12 @@
 	],
 	"scripts": {
 		"dev": "bun run db:up && bun run ministack:up && bun run --filter '*' dev",
-		"test": "bun run --filter '*' test",
+		"test": "bun run --filter '@algrace/api' test",
 		"db:init": "bash scripts/db-init.sh",
 		"db:up": "bash scripts/db-up.sh",
 		"db:down": "bash scripts/db-down.sh",
+		"db:generate": "bun run --filter '@algrace/api' db:generate",
+		"db:migrate": "bun run --filter '@algrace/api' db:migrate",
 		"ministack:up": "bash scripts/ministack-up.sh",
 		"ministack:down": "bash scripts/ministack-down.sh"
 	}
