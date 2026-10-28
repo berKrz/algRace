@@ -1,6 +1,6 @@
 export const TOPICS = {
-	ALGORITHM_PROGRESS: 'algorithm.progress',
-	ROUND_RESOLVED: 'round.resolved'
+	ALGORITHM_PROGRESS: 'algorithm-progress',
+	ROUND_RESOLVED: 'round-resolved'
 } as const;
 
 export type TopicName = (typeof TOPICS)[keyof typeof TOPICS];

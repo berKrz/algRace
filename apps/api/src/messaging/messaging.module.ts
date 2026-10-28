@@ -3,7 +3,8 @@ import {
 	SNSClient,
 	CreateTopicCommand,
 	SubscribeCommand,
-	SetSubscriptionAttributesCommand
+	SetSubscriptionAttributesCommand,
+	ListSubscriptionsByTopicCommand
 } from '@aws-sdk/client-sns';
 import {
 	SQSClient,
@@ -104,21 +105,23 @@ export class MessagingModule implements OnModuleInit {
 			if (!queueArn)
 				throw new Error(`Could not read ARN for queue ${queueName}`);
 
-			const { SubscriptionArn } = await this.sns.send(
-				new SubscribeCommand({
-					TopicArn: topicArn,
-					Protocol: 'sqs',
-					Endpoint: queueArn,
-					ReturnSubscriptionArn: true
-				})
-			);
+			let subscriptionArn = await this.findSubscription(topicArn, queueArn);
+			if (!subscriptionArn) {
+				const { SubscriptionArn } = await this.sns.send(
+					new SubscribeCommand({
+						TopicArn: topicArn,
+						Protocol: 'sqs',
+						Endpoint: queueArn,
+						ReturnSubscriptionArn: true
+					})
+				);
+				subscriptionArn = SubscriptionArn;
+			}
 
-			// RawMessageDelivery=true means SQS receives the SNS payload as-is instead
-			// of wrapped in SNS's JSON envelope
-			if (SubscriptionArn) {
+			if (subscriptionArn) {
 				await this.sns.send(
 					new SetSubscriptionAttributesCommand({
-						SubscriptionArn,
+						SubscriptionArn: subscriptionArn,
 						AttributeName: 'RawMessageDelivery',
 						AttributeValue: 'true'
 					})
@@ -149,5 +152,30 @@ export class MessagingModule implements OnModuleInit {
 
 			this.logger.log(`Subscribed: ${queueName} → ${topicName}`);
 		}
+	}
+
+	private async findSubscription(
+		topicArn: string,
+		queueArn: string
+	): Promise<string | undefined> {
+		let nextToken: string | undefined;
+		do {
+			const result = await this.sns.send(
+				new ListSubscriptionsByTopicCommand({
+					TopicArn: topicArn,
+					NextToken: nextToken
+				})
+			);
+			const found = result.Subscriptions?.find(
+				(s) =>
+					s.Protocol === 'sqs' &&
+					s.Endpoint === queueArn &&
+					s.SubscriptionArn &&
+					s.SubscriptionArn !== 'PendingConfirmation'
+			);
+			if (found?.SubscriptionArn) return found.SubscriptionArn;
+			nextToken = result.NextToken;
+		} while (nextToken);
+		return undefined;
 	}
 }

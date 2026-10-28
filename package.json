@@ -1,14 +1,16 @@
 {
-  "name": "@algrace/root",
-  "private": true,
-  "workspaces": ["apps/*"],
-  "scripts": {
-    "dev": "bun run --filter '*' dev",
-    "test": "bun run --filter '*' test",
-    "db:init": "bash scripts/db-init.sh",
-    "db:up": "bash scripts/db-up.sh",
-    "db:down": "bash scripts/db-down.sh",
-    "ministack:up": "bash scripts/ministack-up.sh",
-    "ministack:down": "bash scripts/ministack-down.sh"
-  }
+	"name": "@algrace/root",
+	"private": true,
+	"workspaces": [
+		"apps/*"
+	],
+	"scripts": {
+		"dev": "bun run db:up && bun run ministack:up && bun run --filter '*' dev",
+		"test": "bun run --filter '*' test",
+		"db:init": "bash scripts/db-init.sh",
+		"db:up": "bash scripts/db-up.sh",
+		"db:down": "bash scripts/db-down.sh",
+		"ministack:up": "bash scripts/ministack-up.sh",
+		"ministack:down": "bash scripts/ministack-down.sh"
+	}
 }
