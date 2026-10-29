@@ -15,6 +15,20 @@
       "when": 1793221682703,
       "tag": "0001_lucky_the_renegades",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793224899337,
+      "tag": "0002_outbox_notify",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793227887069,
+      "tag": "0003_round_algorithms_notify",
+      "breakpoints": true
     }
   ]
 }

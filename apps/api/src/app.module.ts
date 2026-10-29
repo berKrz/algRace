@@ -6,6 +6,9 @@ import { DatabaseModule } from './database/database.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { HealthModule } from './health/health.module';
 import { SorterModule } from './sorter/sorter.module';
+import { RoundsModule } from './rounds/rounds.module';
+import { OutboxPubModule } from './workers/outbox-pub/outbox-pub.module';
+import { RefereeModule } from './workers/referee/referee.module';
 
 @Module({
 	imports: [
@@ -14,7 +17,10 @@ import { SorterModule } from './sorter/sorter.module';
 		DatabaseModule,
 		MessagingModule,
 		HealthModule,
-		SorterModule
+		SorterModule,
+		RoundsModule,
+		OutboxPubModule,
+		RefereeModule
 	]
 })
 export class AppModule {}
