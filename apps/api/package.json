@@ -30,6 +30,7 @@
 		"seedrandom": "^3.0.5"
 	},
 	"devDependencies": {
+		"@nestjs/testing": "^11.0.0",
 		"@types/bun": "latest",
 		"@types/express": "^5.0.6",
 		"@types/pg": "^8.23.1",

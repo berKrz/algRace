@@ -30,7 +30,7 @@ export class EnvSchema {
 	@IsInt()
 	@Min(0)
 	@Type(() => Number)
-	REFEREE_STARTUP_GRACE_MS: number = 500;
+	REFEREE_WARMUP_MS: number = 500;
 
 	@IsOptional()
 	@IsInt()

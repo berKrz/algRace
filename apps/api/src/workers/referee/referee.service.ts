@@ -41,7 +41,7 @@ export class RefereeService
 	constructor(
 		sqs: SQSClient,
 		@Inject(QUEUE_URLS) queueUrls: QueueUrlMap,
-		private readonly env: EnvSchema,
+		@Inject(EnvSchema) private readonly env: EnvSchema,
 		@Inject(DRIZZLE) private readonly db: Database,
 		private readonly pinoLogger: PinoLogger
 	) {
@@ -124,6 +124,9 @@ export class RefereeService
 	}
 
 	private async evaluateRound(roundId: string, startedAt: Date): Promise<void> {
+		const now = Date.now();
+		if (now - startedAt.getTime() < this.env.REFEREE_WARMUP_MS) return;
+
 		const rows = await this.db
 			.select({
 				algorithm: schema.roundAlgorithms.algorithm,
@@ -134,21 +137,12 @@ export class RefereeService
 
 		if (rows.length === 0) return;
 
-		const now = Date.now();
-		const startupDeadline =
-			startedAt.getTime() + this.env.REFEREE_STARTUP_GRACE_MS;
 		const perRound = this.lastSeen.get(roundId);
 
 		for (const row of rows) {
 			if (row.executionTime !== null) continue;
-			const lastSeen = perRound?.get(row.algorithm);
-			if (lastSeen === undefined) {
-				if (now < startupDeadline) return;
-				continue;
-			}
-			if (now - lastSeen <= this.env.REFEREE_HEARTBEAT_WINDOW_MS) {
-				return;
-			}
+			const lastSeen = perRound?.get(row.algorithm) ?? 0;
+			if (now - lastSeen <= this.env.REFEREE_HEARTBEAT_WINDOW_MS) return;
 		}
 
 		await this.resolve(roundId);
