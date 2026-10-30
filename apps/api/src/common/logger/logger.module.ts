@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 
 import { EnvSchema } from '@/config/env.schema.ts';
 
+@Global()
 @Module({
 	imports: [
 		LoggerModule.forRootAsync({
@@ -24,6 +25,7 @@ import { EnvSchema } from '@/config/env.schema.ts';
 				}
 			})
 		})
-	]
+	],
+	exports: [LoggerModule]
 })
 export class AppLoggerModule {}

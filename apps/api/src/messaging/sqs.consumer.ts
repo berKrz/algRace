@@ -1,6 +1,5 @@
 import {
 	Inject,
-	Logger,
 	OnApplicationBootstrap,
 	OnApplicationShutdown
 } from '@nestjs/common';
@@ -10,6 +9,7 @@ import {
 	ReceiveMessageCommand,
 	SQSClient
 } from '@aws-sdk/client-sqs';
+import { PinoLogger } from 'nestjs-pino';
 
 import { QUEUE_URLS, type QueueUrlMap } from './messaging.tokens.ts';
 import { QueueName } from './topics';
@@ -17,14 +17,16 @@ import { QueueName } from './topics';
 export abstract class SqsConsumer
 	implements OnApplicationBootstrap, OnApplicationShutdown
 {
-	protected readonly logger = new Logger(this.constructor.name);
 	private running = false;
 
 	constructor(
 		private readonly queueName: QueueName,
 		private readonly sqs: SQSClient,
-		@Inject(QUEUE_URLS) private readonly queueUrls: QueueUrlMap
-	) {}
+		@Inject(QUEUE_URLS) private readonly queueUrls: QueueUrlMap,
+		protected readonly logger: PinoLogger
+	) {
+		this.logger.setContext(SqsConsumer.name);
+	}
 
 	protected abstract handle(message: Message): Promise<void>;
 
@@ -39,7 +41,7 @@ export abstract class SqsConsumer
 
 	private async loop(): Promise<void> {
 		const queueUrl = this.queueUrls.get(this.queueName)!;
-		this.logger.log(`Polling ${this.queueName}`);
+		this.logger.info(`Polling ${this.queueName}`);
 
 		while (this.running) {
 			try {
@@ -73,6 +75,6 @@ export abstract class SqsConsumer
 			}
 		}
 
-		this.logger.log(`Stopped polling ${this.queueName}`);
+		this.logger.info(`Stopped polling ${this.queueName}`);
 	}
 }

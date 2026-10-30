@@ -93,7 +93,13 @@ describe('Referee integration', () => {
 		const [room] = await db
 			.insert(schema.rooms)
 			.values({
-				code: Math.random().toString(36).slice(2, 8),
+				code: Array.from(
+					{ length: 6 },
+					() =>
+						'abcdefghijklmnopqrstuvwxyz0123456789'[
+							Math.floor(Math.random() * 36)
+						]
+				).join(''),
 				roundsTotal: 5
 			})
 			.returning();

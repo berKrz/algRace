@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { SQSClient, type Message } from '@aws-sdk/client-sqs';
 import { and, asc, eq, isNotNull, isNull } from 'drizzle-orm';
-import { PinoLogger } from 'nestjs-pino';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import type { Subscriber } from 'pg-listen';
 
 import { EnvSchema } from '@/config/env.schema';
@@ -45,7 +45,7 @@ export class RefereeService
 		@Inject(DRIZZLE) private readonly db: Database,
 		private readonly pinoLogger: PinoLogger
 	) {
-		super(QUEUES.REFEREE_ALGORITHM_PROGRESS, sqs, queueUrls);
+		super(QUEUES.REFEREE_ALGORITHM_PROGRESS, sqs, queueUrls, pinoLogger);
 		this.pinoLogger.setContext(RefereeService.name);
 	}
 
