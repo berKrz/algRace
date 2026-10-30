@@ -6,7 +6,9 @@
 	],
 	"scripts": {
 		"dev": "bun run db:up && bun run ministack:up && bun run --filter '*' dev",
-		"test": "bun run --filter '@algrace/api' test",
+		"test": "bun run db:up && bun run ministack:up && NODE_ENV=test bun run --filter '@algrace/api' test",
+		"test:unit": "bun run --filter '@algrace/api' test:unit",
+		"test:integration": "bun run db:up && bun run ministack:up && NODE_ENV=test bun run --filter '@algrace/api' test:integration",
 		"db:init": "bash scripts/db-init.sh",
 		"db:up": "bash scripts/db-up.sh",
 		"db:down": "bash scripts/db-down.sh",

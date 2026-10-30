@@ -14,7 +14,7 @@ import {
 } from '@aws-sdk/client-sqs';
 
 import { EnvSchema } from '@/config/env.schema';
-import { TOPICS, QUEUES, QUEUE_SUBSCRIPTIONS } from './topics';
+import { TOPICS, QUEUES, QUEUE_SUBSCRIPTIONS, resourcePrefix } from './topics';
 import { SnsPublisher } from './sns.publisher';
 import {
 	TOPIC_ARNS,
@@ -67,26 +67,31 @@ export class MessagingModule implements OnModuleInit {
 	) {}
 
 	async onModuleInit(): Promise<void> {
+		const prefix = resourcePrefix();
+		if (prefix) {
+			this.logger.log(`Provisioning with resource prefix "${prefix}"`);
+		}
+
 		for (const name of Object.values(TOPICS)) {
 			const { TopicArn } = await this.sns.send(
-				new CreateTopicCommand({ Name: name })
+				new CreateTopicCommand({ Name: `${prefix}${name}` })
 			);
 			if (!TopicArn)
 				throw new Error(`SNS CreateTopic returned no ARN for ${name}`);
 
 			this.topicArns.set(name, TopicArn);
-			this.logger.log(`Topic ready: ${name}`);
+			this.logger.log(`Topic ready: ${prefix}${name}`);
 		}
 
 		for (const name of Object.values(QUEUES)) {
 			const { QueueUrl } = await this.sqs.send(
-				new CreateQueueCommand({ QueueName: name })
+				new CreateQueueCommand({ QueueName: `${prefix}${name}` })
 			);
 			if (!QueueUrl)
 				throw new Error(`SQS CreateQueue returned no URL for ${name}`);
 
 			this.queueUrls.set(name, QueueUrl);
-			this.logger.log(`Queue ready: ${name}`);
+			this.logger.log(`Queue ready: ${prefix}${name}`);
 		}
 
 		for (const [queueName, topicName] of Object.entries(QUEUE_SUBSCRIPTIONS)) {

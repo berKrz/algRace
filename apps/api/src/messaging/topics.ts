@@ -18,3 +18,13 @@ export const QUEUE_SUBSCRIPTIONS: Record<QueueName, TopicName> = {
 	[QUEUES.REFEREE_ALGORITHM_PROGRESS]: TOPICS.ALGORITHM_PROGRESS,
 	[QUEUES.SETTLER_ROUND_RESOLVED]: TOPICS.ROUND_RESOLVED
 };
+
+/**
+ * Prefix applied to real AWS resource names at provisioning time. Lets
+ * tests and dev coexist on a single MiniStack endpoint without colliding.
+ * In-code references use the unprefixed logical names; only the SNS/SQS
+ * boundary ever sees the prefixed form.
+ */
+export function resourcePrefix(): string {
+	return process.env.NODE_ENV === 'test' ? 'test_' : '';
+}
