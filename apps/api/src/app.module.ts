@@ -9,6 +9,7 @@ import { SorterModule } from './sorter/sorter.module';
 import { RoundsModule } from './rounds/rounds.module';
 import { OutboxPubModule } from './workers/outbox-pub/outbox-pub.module';
 import { RefereeModule } from './workers/referee/referee.module';
+import { GatewayModule } from './workers/gateway/gateway.module';
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { RefereeModule } from './workers/referee/referee.module';
 		SorterModule,
 		RoundsModule,
 		OutboxPubModule,
-		RefereeModule
+		RefereeModule,
+		GatewayModule
 	]
 })
 export class AppModule {}

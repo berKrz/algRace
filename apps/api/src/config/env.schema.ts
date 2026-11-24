@@ -6,7 +6,8 @@ import {
 	IsIn,
 	IsUrl,
 	IsInt,
-	Min
+	Min,
+	isNotEmpty
 } from 'class-validator';
 
 export class EnvSchema {
@@ -37,4 +38,9 @@ export class EnvSchema {
 	@Min(0)
 	@Type(() => Number)
 	REFEREE_HEARTBEAT_WINDOW_MS: number = 1000;
+
+	@IsOptional()
+	@IsString()
+	@IsNotEmpty()
+	SHM_DIR: string = '/tmp';
 }

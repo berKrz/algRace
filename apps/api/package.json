@@ -27,7 +27,8 @@
 		"pino-http": "latest",
 		"reflect-metadata": "^0.2.2",
 		"rxjs": "^7.8.1",
-		"seedrandom": "^3.0.5"
+		"seedrandom": "^3.0.5",
+		"ws": "^8.22.0"
 	},
 	"devDependencies": {
 		"@nestjs/testing": "^11.0.0",
@@ -35,6 +36,7 @@
 		"@types/express": "^5.0.6",
 		"@types/pg": "^8.23.1",
 		"@types/seedrandom": "^3.0.8",
+		"@types/ws": "^8.18.2",
 		"drizzle-kit": "latest",
 		"pino-pretty": "latest",
 		"prettier": "^3.9.10",

@@ -10,11 +10,7 @@ export type AlgorithmName =
 	| 'radix'
 	| 'heap';
 
-export interface ProgressSink {
-	confirmed: number;
-}
-
-export type SortFn = (arr: number[], progress?: ProgressSink) => void;
+export type SortFn = (view: Int32Array) => void;
 
 export const algorithms: Partial<Record<AlgorithmName, SortFn>> = {
 	bubble: bubbleSort
